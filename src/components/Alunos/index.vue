@@ -51,7 +51,7 @@ export default {
   },
   created() {
     this.$http
-      .get("http://localhost:3000/alunos")
+      .get("https://vuejscurso-api.herokuapp.com/alunos")
       .then((res) => res.json())
       .then((alunos) => (this.alunos = alunos));
   },
@@ -65,10 +65,12 @@ export default {
   },
   methods: {
     remover(aluno) {
-      this.$http.delete("http://localhost:3000/alunos/" + aluno.id).then(() => {
-        let indice = this.alunos.indexOf(aluno);
-        this.alunos.splice(indice, 1);
-      });
+      this.$http
+        .delete("https://vuejscurso-api.herokuapp.com/alunos/" + aluno.id)
+        .then(() => {
+          let indice = this.alunos.indexOf(aluno);
+          this.alunos.splice(indice, 1);
+        });
     },
     addAluno() {
       let _aluno = {
@@ -76,7 +78,7 @@ export default {
       };
 
       this.$http
-        .post("http://localhost:3000/alunos", _aluno)
+        .post("https://vuejscurso-api.herokuapp.com/alunos", _aluno)
         .then((res) => res.json())
         .then((aluno) => this.alunos.push(aluno));
       this.nome = "";
