@@ -14,7 +14,8 @@
     "express": "^4.17.1",
     "vue": "^2.6.11",
     "vue-material": "^1.0.0-beta-14",
-    "vue-resource": "^1.5.1"
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.3.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",

@@ -15,8 +15,7 @@
             type="button"
             v-on:click.prevent="addAluno()"
             v-bind:disabled="nome.length === 0 ? true : false"
-            >Adicionar</md-button
-          >
+          >Adicionar</md-button>
         </md-field>
       </md-table-toolbar>
 
@@ -34,9 +33,7 @@
         <md-table-cell md-numeric>{{ aluno.id }}</md-table-cell>
         <md-table-cell>{{ aluno.nome }}</md-table-cell>
         <md-table-cell>
-          <md-button class="md-accent" @click="remover(aluno)"
-            >Remover</md-button
-          >
+          <md-button class="md-accent" @click="remover(aluno)">Remover</md-button>
         </md-table-cell>
       </md-table-row>
     </md-table>
@@ -47,20 +44,20 @@
 import Title from "../_share/Title";
 export default {
   components: {
-    Title,
+    Title
   },
   created() {
     this.$http
       .get("https://vuejscurso-api.herokuapp.com/alunos")
-      .then((res) => res.json())
-      .then((alunos) => (this.alunos = alunos));
+      .then(res => res.json())
+      .then(alunos => (this.alunos = alunos));
   },
   props: {},
   data() {
     return {
       titulo: "Alunos",
       nome: "",
-      alunos: [],
+      alunos: []
     };
   },
   methods: {
@@ -74,16 +71,16 @@ export default {
     },
     addAluno() {
       let _aluno = {
-        nome: this.nome,
+        nome: this.nome
       };
 
       this.$http
         .post("https://vuejscurso-api.herokuapp.com/alunos", _aluno)
-        .then((res) => res.json())
-        .then((aluno) => this.alunos.push(aluno));
+        .then(res => res.json())
+        .then(aluno => this.alunos.push(aluno));
       this.nome = "";
-    },
-  },
+    }
+  }
 };
 </script>
 
