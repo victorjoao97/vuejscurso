@@ -8,21 +8,21 @@ import Sobre from "./components/Sobre";
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
-      path: "/professores",
-      nome: "Professores",
-      component: Professores,
-    },
-    {
-      path: "/Alunos",
-      nome: "Alunos",
-      component: Alunos,
-    },
-    {
-      path: "/sobre",
-      nome: "Sobre",
-      component: Sobre,
-    },
-  ],
+	routes: [
+		{
+			path: "/professores",
+			nome: "Professores",
+			component: Professores
+		},
+		{
+			path: "/Alunos",
+			nome: "Alunos",
+			component: Alunos
+		},
+		{
+			path: "/sobre",
+			nome: "Sobre",
+			component: Sobre
+		}
+	]
 });
