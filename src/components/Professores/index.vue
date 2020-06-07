@@ -1,48 +1,59 @@
 <template>
-	<div>
-		<md-table md-card v-if="!load">
-			<md-table-toolbar>
-				<Title texto="Professores" />
-				<md-field>
-					<label>Nome do professor</label>
-					<md-input
-						v-model="nome"
-						v-on:keyup.enter="addProfessor()"
-						placeholder="Digite o nome do professor"
-					></md-input>
-				</md-field>
-				<md-button
-					class="md-primary"
-					type="button"
-					v-on:click.prevent="addProfessor()"
-					v-bind:disabled="nome.length === 0 ? true : false"
-					>Adicionar</md-button
-				>
-			</md-table-toolbar>
+    <div>
+        <md-table md-card v-if="!load">
+            <md-table-toolbar>
+                <Title texto="Professores" />
+                <md-field>
+                    <label>Nome do professor</label>
+                    <md-input
+                        v-model="nome"
+                        v-on:keyup.enter="addProfessor()"
+                        placeholder="Digite o nome do professor"
+                    ></md-input>
+                </md-field>
+                <md-button
+                    class="md-primary"
+                    type="button"
+                    v-on:click.prevent="addProfessor()"
+                    v-bind:disabled="nome.length === 0 ? true : false"
+                    >Adicionar</md-button
+                >
+            </md-table-toolbar>
 
-			<md-table-row v-if="professores.length">
-				<md-table-head>Código</md-table-head>
-				<md-table-head>Nome</md-table-head>
-				<md-table-head>Alunos</md-table-head>
-			</md-table-row>
+            <md-table-row v-if="professores.length">
+                <md-table-head>Código</md-table-head>
+                <md-table-head>Nome</md-table-head>
+                <md-table-head>Alunos</md-table-head>
+            </md-table-row>
 
-			<md-table-row v-else>
-				<md-table-cell>Nenhum professor encontrado</md-table-cell>
-			</md-table-row>
+            <md-table-row v-else>
+                <md-table-cell>Nenhum professor encontrado</md-table-cell>
+            </md-table-row>
 
-			<md-table-row
-				v-for="(professor, index) in professores"
-				:key="index"
-				v-on:click="irParaAlunos(professor.id)"
-				style="cursor: pointer"
-			>
-				<md-table-cell>{{ professor.id }}</md-table-cell>
-				<md-table-cell>{{ professor.nome }}</md-table-cell>
-				<md-table-cell>{{ professor.qtdAlunos }}</md-table-cell>
-			</md-table-row>
-		</md-table>
-		<md-progress-bar v-else md-mode="indeterminate"></md-progress-bar>
-	</div>
+            <md-table-row
+                v-for="(professor, index) in professores"
+                :key="index"
+                v-on:click="irParaAlunos(professor.id)"
+                style="cursor: pointer"
+            >
+                <md-table-cell>{{ professor.id }}</md-table-cell>
+                <md-table-cell>{{ professor.nome }}</md-table-cell>
+                <md-table-cell>{{ professor.qtdAlunos }}</md-table-cell>
+            </md-table-row>
+        </md-table>
+        <md-progress-bar
+            v-else-if="!fail"
+            md-mode="indeterminate"
+        ></md-progress-bar>
+        <md-empty-state
+            v-else
+            class="md-accent"
+            md-icon="error"
+            md-label="Sem conexão"
+            md-description="Por favor, tente mais tarde."
+        >
+        </md-empty-state>
+    </div>
 </template>
 
 <script>
@@ -56,7 +67,8 @@ export default {
             nome: "",
             professores: [],
             alunos: [],
-            load: true
+            load: true,
+            fail: false
         };
     },
     created() {
@@ -67,6 +79,9 @@ export default {
                 this.alunos = alunos;
                 this.carregarProfessores();
                 this.load = false;
+            })
+            .catch(() => {
+                this.fail = true;
             });
     },
     props: {},

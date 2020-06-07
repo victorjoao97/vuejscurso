@@ -52,20 +52,52 @@
                 <md-table-cell md-numeric>{{ aluno.id }}</md-table-cell>
                 <md-table-cell>{{ aluno.nome }}</md-table-cell>
                 <md-table-cell>
-                    <md-button
-                        class="md-raised"
-                        :to="'/alunoDetalhe/' + aluno.id"
-                        >Ver</md-button
-                    >
-                    <md-button
-                        class="md-raised md-accent"
-                        @click="showDialogRemove(aluno)"
-                        >Remover</md-button
-                    >
+                    <md-menu md-direction="bottom-start" class="mobile">
+                        <md-button
+                            md-menu-trigger
+                            class="md-fab md-mini md-primary"
+                        >
+                            <md-icon>menu</md-icon>
+                        </md-button>
+
+                        <md-menu-content>
+                            <md-menu-item :to="'/alunoDetalhe/' + aluno.id">
+                                Ver
+                            </md-menu-item>
+                            <md-menu-item @click="showDialogRemove(aluno)">
+                                Remover
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <div class="mobile-none">
+                        <md-button
+                            class="md-fab md-mini md-primary"
+                            :to="'/alunoDetalhe/' + aluno.id"
+                        >
+                            <md-icon>visibility</md-icon>
+                        </md-button>
+                        <md-button
+                            class="md-fab md-mini md-accent"
+                            @click="showDialogRemove(aluno)"
+                        >
+                            <md-icon>delete</md-icon>
+                        </md-button>
+                    </div>
                 </md-table-cell>
             </md-table-row>
         </md-table>
-        <md-progress-bar v-else md-mode="indeterminate"></md-progress-bar>
+        <md-progress-bar
+            v-else-if="!fail"
+            md-mode="indeterminate"
+        ></md-progress-bar>
+        <md-empty-state
+            v-else
+            class="md-accent"
+            md-icon="error"
+            md-label="Sem conexão"
+            md-description="Por favor, tente mais tarde."
+        >
+        </md-empty-state>
         <md-dialog-confirm
             :md-active.sync="confirmRemove.active"
             md-title="Tem certeza que deseja remover este aluno?"
@@ -85,17 +117,18 @@ export default {
         Title
     },
     created() {
+        let url = `alunos${
+            this.professorId ? "?professor.id=" + this.professorId : ""
+        }`;
         this.$http
-            .get(
-                "alunos" +
-                    (this.professorId
-                        ? "?professor.id=" + this.professorId
-                        : "")
-            )
+            .get(url)
             .then(res => res.json())
             .then(alunos => {
                 this.alunos = alunos;
-                this.onLoad();
+                this.load = false;
+            })
+            .catch(() => {
+                this.fail = true;
             });
 
         if (this.professorId) {
@@ -114,7 +147,8 @@ export default {
             professores: [],
             confirmRemove: { active: false, id: null },
             professorAluno: null,
-            load: true
+            load: true,
+            fail: false
         };
     },
     methods: {
@@ -155,7 +189,6 @@ export default {
                 });
         },
         carregarProfessor(callback = false) {
-            this.onLoad();
             this.$http
                 .get("professores/" + this.professorId)
                 .then(res => res.json())
@@ -165,17 +198,14 @@ export default {
                     } else {
                         callback(professor);
                     }
-                    this.onLoad();
                 });
         },
         carregarProfessores() {
-            this.onLoad();
             this.$http
                 .get("professores/")
                 .then(res => res.json())
                 .then(professores => {
                     this.professores = professores;
-                    this.onLoad();
                 });
         },
         titulo() {
@@ -191,9 +221,6 @@ export default {
         },
         onCancel() {
             this.value = "Disagreed";
-        },
-        onLoad() {
-            this.load = !this.load;
         }
     },
     watch: {
