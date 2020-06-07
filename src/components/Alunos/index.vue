@@ -33,9 +33,7 @@
                     class="md-primary md-raised"
                     type="button"
                     v-on:click.prevent="addAluno()"
-                    v-bind:disabled="
-                        nome.length === 0 || !professorAluno ? true : false
-                    "
+                    v-bind:disabled="enableAdd()"
                     >Adicionar</md-button
                 >
             </md-table-toolbar>
@@ -120,6 +118,15 @@ export default {
         };
     },
     methods: {
+        enableAdd() {
+            if (!this.professorId) {
+                return this.nome.length === 0 || !this.professorAluno
+                    ? true
+                    : false;
+            } else {
+                return this.nome.length === 0 ? true : false;
+            }
+        },
         showDialogRemove(id) {
             this.confirmRemove = { active: true, id };
         },
