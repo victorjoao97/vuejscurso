@@ -15,13 +15,13 @@ Vue.use(VueMaterial);
 
 Vue.mixin(titleMixin);
 router.beforeEach((to, from, next) => {
-	document.title = to.name + " - Projeto Escola";
-	next();
+    document.title = to.name + " - Projeto Escola";
+    next();
 });
 
 Vue.http.options.root = "https://vuejscurso-api.herokuapp.com/";
 
 new Vue({
-	router,
-	render: h => h(App)
+    router,
+    render: h => h(App)
 }).$mount("#app");

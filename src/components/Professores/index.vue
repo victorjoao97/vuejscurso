@@ -48,71 +48,71 @@
 <script>
 import Title from "../_share/Title";
 export default {
-	components: {
-		Title
-	},
-	data() {
-		return {
-			nome: "",
-			professores: [],
-			alunos: [],
-			load: true
-		};
-	},
-	created() {
-		this.$http
-			.get("alunos")
-			.then(res => res.json())
-			.then(alunos => {
-				this.alunos = alunos;
-				this.carregarProfessores();
-				this.load = false;
-			});
-	},
-	props: {},
-	methods: {
-		remover(professor) {
-			this.$http.delete("professores/" + professor.id).then(() => {
-				let indice = this.professores.indexOf(professor);
-				this.professores.splice(indice, 1);
-			});
-		},
-		addProfessor() {
-			let _professor = {
-				nome: this.nome
-			};
+    components: {
+        Title
+    },
+    data() {
+        return {
+            nome: "",
+            professores: [],
+            alunos: [],
+            load: true
+        };
+    },
+    created() {
+        this.$http
+            .get("alunos")
+            .then(res => res.json())
+            .then(alunos => {
+                this.alunos = alunos;
+                this.carregarProfessores();
+                this.load = false;
+            });
+    },
+    props: {},
+    methods: {
+        remover(professor) {
+            this.$http.delete("professores/" + professor.id).then(() => {
+                let indice = this.professores.indexOf(professor);
+                this.professores.splice(indice, 1);
+            });
+        },
+        addProfessor() {
+            let _professor = {
+                nome: this.nome
+            };
 
-			this.$http
-				.post("professores", _professor)
-				.then(res => res.json())
-				.then(professor => this.professores.push(professor));
-			this.nome = "";
-		},
-		pegarQtdAlunosPorProfessor() {
-			this.professores.forEach((professor, index) => {
-				professor = {
-					id: professor.id,
-					nome: professor.nome,
-					qtdAlunos: this.alunos.filter(
-						aluno => aluno.professor?.id == professor.id
-					).length
-				};
-				this.professores[index] = professor;
-			});
-		},
-		carregarProfessores() {
-			this.$http
-				.get("professores")
-				.then(res => res.json())
-				.then(professores => {
-					this.professores = professores;
-					this.pegarQtdAlunosPorProfessor();
-				});
-		},
-		irParaAlunos(professor) {
-			this.$router.push("alunos/" + professor);
-		}
-	}
+            this.$http
+                .post("professores", _professor)
+                .then(res => res.json())
+                .then(professor => this.professores.push(professor));
+            this.nome = "";
+        },
+        pegarQtdAlunosPorProfessor() {
+            this.professores.forEach((professor, index) => {
+                professor = {
+                    id: professor.id,
+                    nome: professor.nome,
+                    qtdAlunos: this.alunos.filter(
+                        aluno => aluno.professor?.id == professor.id
+                    ).length
+                };
+                this.professores[index] = professor;
+            });
+        },
+        carregarProfessores() {
+            this.$http
+                .get("professores")
+                .then(res => res.json())
+                .then(professores => {
+                    this.professores = professores;
+                    this.pegarQtdAlunosPorProfessor();
+                });
+        },
+        irParaAlunos(professor) {
+            this.$router.push("alunos/" + professor);
+        }
+    }
 };
 </script>
 

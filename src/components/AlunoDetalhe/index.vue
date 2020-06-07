@@ -84,59 +84,59 @@
 
 <script>
 export default {
-	data() {
-		return {
-			aluno: { id: this.$route.params.alunoId, nome: "", professor: {} },
-			professor: {},
-			editarDados: false,
-			professores: [],
-			load: true
-		};
-	},
-	created() {
-		this.$http
-			.get("alunos/" + this.aluno.id)
-			.then(res => res.json())
-			.then(aluno => {
-				this.aluno = aluno;
-				this.onLoad();
-			});
+    data() {
+        return {
+            aluno: { id: this.$route.params.alunoId, nome: "", professor: {} },
+            professor: {},
+            editarDados: false,
+            professores: [],
+            load: true
+        };
+    },
+    created() {
+        this.$http
+            .get("alunos/" + this.aluno.id)
+            .then(res => res.json())
+            .then(aluno => {
+                this.aluno = aluno;
+                this.onLoad();
+            });
 
-		this.$http
-			.get("professores")
-			.then(res => res.json())
-			.then(professores => {
-				this.professores = professores;
-			});
-	},
-	methods: {
-		habilitaCampos() {
-			this.cancelarCampos();
-		},
-		salvarCampos() {
-			this.$http
-				.put("alunos/" + this.aluno.id, this.aluno)
-				.then(res => res.json())
-				.then(aluno => (this.aluno = aluno));
-		},
-		salvarCamposBtn() {
-			this.salvarCampos();
-			this.cancelarCampos();
-		},
-		cancelarCampos() {
-			this.editarDados = !this.editarDados;
-		},
-		onLoad() {
-			this.load = !this.load;
-		}
-	},
-	watch: {
-		editarDados() {
-			if (!this.editarDados) {
-				this.salvarCampos();
-			}
-		}
-	}
+        this.$http
+            .get("professores")
+            .then(res => res.json())
+            .then(professores => {
+                this.professores = professores;
+            });
+    },
+    methods: {
+        habilitaCampos() {
+            this.cancelarCampos();
+        },
+        salvarCampos() {
+            this.$http
+                .put("alunos/" + this.aluno.id, this.aluno)
+                .then(res => res.json())
+                .then(aluno => (this.aluno = aluno));
+        },
+        salvarCamposBtn() {
+            this.salvarCampos();
+            this.cancelarCampos();
+        },
+        cancelarCampos() {
+            this.editarDados = !this.editarDados;
+        },
+        onLoad() {
+            this.load = !this.load;
+        }
+    },
+    watch: {
+        editarDados() {
+            if (!this.editarDados) {
+                this.salvarCampos();
+            }
+        }
+    }
 };
 </script>
 

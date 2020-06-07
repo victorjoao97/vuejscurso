@@ -30,15 +30,15 @@
 </template>
 <script>
 export default {
-	data() {
-		return { code: "" };
-	},
-	created() {
-		this.$http
-			.get("https://api.github.com/users/victorjoao97")
-			.then(res => res.json())
-			.then(res => (this.code = res));
-	}
+    data() {
+        return { code: "" };
+    },
+    created() {
+        this.$http
+            .get("https://api.github.com/users/victorjoao97")
+            .then(res => res.json())
+            .then(res => (this.code = res));
+    }
 };
 </script>
 

@@ -4,9 +4,9 @@
 
 <script>
 export default {
-	props: {
-		texto: String
-	}
+    props: {
+        texto: String
+    }
 };
 </script>
 

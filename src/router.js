@@ -8,27 +8,27 @@ import Sobre from "./components/Sobre";
 Vue.use(Router);
 
 export default new Router({
-	routes: [
-		{
-			path: "/professores",
-			name: "Professores",
-			component: Professores
-		},
-		{
-			path: "/alunos/:professorId?",
-			name: "Alunos",
-			component: Alunos
-		},
-		{
-			path: "/sobre",
-			name: "Sobre",
-			component: Sobre
-		},
-		{
-			path: "/alunoDetalhe/:alunoId",
-			name: "Aluno Detalhe",
-			component: () => import("./components/AlunoDetalhe")
-		},
-		{ path: "*", redirect: "/professores" }
-	]
+    routes: [
+        {
+            path: "/professores",
+            name: "Professores",
+            component: Professores
+        },
+        {
+            path: "/alunos/:professorId?",
+            name: "Alunos",
+            component: Alunos
+        },
+        {
+            path: "/sobre",
+            name: "Sobre",
+            component: Sobre
+        },
+        {
+            path: "/alunoDetalhe/:alunoId",
+            name: "Aluno Detalhe",
+            component: () => import("./components/AlunoDetalhe")
+        },
+        { path: "*", redirect: "/professores" }
+    ]
 });

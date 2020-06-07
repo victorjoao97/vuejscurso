@@ -30,16 +30,16 @@
 
 <script>
 export default {
-	name: "App",
-	data: () => ({
-		showNavigation: false,
-		showSidepanel: false
-	}),
-	watch: {
-		$route() {
-			this.showNavigation = false;
-		}
-	}
+    name: "App",
+    data: () => ({
+        showNavigation: false,
+        showSidepanel: false
+    }),
+    watch: {
+        $route() {
+            this.showNavigation = false;
+        }
+    }
 };
 </script>
 
