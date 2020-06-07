@@ -11,18 +11,24 @@ export default new Router({
 	routes: [
 		{
 			path: "/professores",
-			nome: "Professores",
+			name: "Professores",
 			component: Professores
 		},
 		{
-			path: "/Alunos",
-			nome: "Alunos",
+			path: "/alunos/:professorId?",
+			name: "Alunos",
 			component: Alunos
 		},
 		{
 			path: "/sobre",
-			nome: "Sobre",
+			name: "Sobre",
 			component: Sobre
-		}
+		},
+		{
+			path: "/alunoDetalhe/:alunoId",
+			name: "Aluno Detalhe",
+			component: () => import("./components/AlunoDetalhe")
+		},
+		{ path: "*", redirect: "/professores" }
 	]
 });
