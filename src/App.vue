@@ -90,6 +90,9 @@ export default {
 }
 .md-app {
     min-height: 350px;
+    margin: 0 auto;
+    width: 900px;
+    max-width: 100%;
     border: 1px solid rgba(#000, 0.12);
 }
 
