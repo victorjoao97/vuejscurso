@@ -41,6 +41,7 @@
             <md-table-row v-if="alunos.length">
                 <md-table-head md-numeric>Mat</md-table-head>
                 <md-table-head>Nome</md-table-head>
+                <md-table-head>Professor</md-table-head>
                 <md-table-head>Opções</md-table-head>
             </md-table-row>
 
@@ -51,6 +52,7 @@
             <md-table-row v-for="(aluno, index) in alunos" :key="index">
                 <md-table-cell md-numeric>{{ aluno.id }}</md-table-cell>
                 <md-table-cell>{{ aluno.nome }}</md-table-cell>
+                <md-table-cell>{{ aluno.professor.nome }}</md-table-cell>
                 <md-table-cell>
                     <md-menu md-direction="bottom-start" class="mobile">
                         <md-button
