@@ -182,7 +182,7 @@ export default {
                 : this.professor;
 
             this.$http
-                .post("alunos", _aluno)
+                .post("aluno", _aluno)
                 .then(res => res.json())
                 .then(aluno => {
                     this.alunos.push(aluno);
