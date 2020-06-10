@@ -119,7 +119,7 @@ export default {
         Title
     },
     created() {
-        let url = `alunos${
+        let url = `aluno${
             this.professorId ? "?professor.id=" + this.professorId : ""
         }`;
         this.$http
@@ -167,7 +167,7 @@ export default {
             this.confirmRemove = { active: true, id };
         },
         remover(aluno) {
-            this.$http.delete("alunos/" + aluno.id).then(() => {
+            this.$http.delete("aluno/" + aluno.id).then(() => {
                 let indice = this.alunos.indexOf(aluno);
                 this.alunos.splice(indice, 1);
             });
@@ -192,7 +192,7 @@ export default {
         },
         carregarProfessor(callback = false) {
             this.$http
-                .get("professores/" + this.professorId)
+                .get("professor/" + this.professorId)
                 .then(res => res.json())
                 .then(professor => {
                     if (!callback) {
@@ -204,7 +204,7 @@ export default {
         },
         carregarProfessores() {
             this.$http
-                .get("professores/")
+                .get("professor/")
                 .then(res => res.json())
                 .then(professores => {
                     this.professores = professores;

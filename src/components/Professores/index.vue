@@ -73,7 +73,7 @@ export default {
     },
     created() {
         this.$http
-            .get("alunos")
+            .get("aluno")
             .then(res => res.json())
             .then(alunos => {
                 this.alunos = alunos;
@@ -87,7 +87,7 @@ export default {
     props: {},
     methods: {
         remover(professor) {
-            this.$http.delete("professores/" + professor.id).then(() => {
+            this.$http.delete("professor/" + professor.id).then(() => {
                 let indice = this.professores.indexOf(professor);
                 this.professores.splice(indice, 1);
             });
@@ -98,7 +98,7 @@ export default {
             };
 
             this.$http
-                .post("professores", _professor)
+                .post("professor", _professor)
                 .then(res => res.json())
                 .then(professor => this.professores.push(professor));
             this.nome = "";
@@ -117,7 +117,7 @@ export default {
         },
         carregarProfessores() {
             this.$http
-                .get("professores")
+                .get("professor")
                 .then(res => res.json())
                 .then(professores => {
                     this.professores = professores;
