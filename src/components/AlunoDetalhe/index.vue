@@ -114,6 +114,8 @@ export default {
             this.cancelarCampos();
         },
         salvarCampos() {
+            this.aluno.professorId = this.aluno.professor.id;
+            delete this.aluno.professor;
             this.$http
                 .put("aluno/" + this.aluno.id, this.aluno)
                 .then(res => res.json())

@@ -120,7 +120,7 @@ export default {
     },
     created() {
         let url = `aluno${
-            this.professorId ? "?professor.id=" + this.professorId : ""
+            this.professorId ? "/byprofessor/" + this.professorId : ""
         }`;
         this.$http
             .get(url)
@@ -177,9 +177,9 @@ export default {
                 nome: this.nome
             };
 
-            _aluno.professor = this.professorAluno
-                ? this.professorAluno
-                : this.professor;
+            _aluno.professorId = this.professorAluno
+                ? this.professorAluno.id
+                : this.professor.id;
 
             this.$http
                 .post("aluno", _aluno)

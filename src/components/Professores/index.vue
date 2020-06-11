@@ -33,12 +33,43 @@
             <md-table-row
                 v-for="(professor, index) in professores"
                 :key="index"
-                v-on:click="irParaAlunos(professor.id)"
-                style="cursor: pointer"
             >
                 <md-table-cell>{{ professor.id }}</md-table-cell>
                 <md-table-cell>{{ professor.nome }}</md-table-cell>
                 <md-table-cell>{{ professor.qtdAlunos }}</md-table-cell>
+                <md-table-cell>
+                    <md-menu md-direction="bottom-start" class="mobile">
+                        <md-button
+                            md-menu-trigger
+                            class="md-fab md-mini md-primary"
+                        >
+                            <md-icon>menu</md-icon>
+                        </md-button>
+
+                        <md-menu-content>
+                            <md-menu-item :to="'/alunos/' + professor.id">
+                                Ver
+                            </md-menu-item>
+                            <md-menu-item @click="showDialogRemove(professor)">
+                                Remover
+                            </md-menu-item>
+                        </md-menu-content>
+                    </md-menu>
+                    <div class="mobile-none">
+                        <md-button
+                            class="md-fab md-mini md-primary"
+                            :to="'/alunos/' + professor.id"
+                        >
+                            <md-icon>visibility</md-icon>
+                        </md-button>
+                        <md-button
+                            class="md-fab md-mini md-accent"
+                            @click="showDialogRemove(professor)"
+                        >
+                            <md-icon>delete</md-icon>
+                        </md-button>
+                    </div>
+                </md-table-cell>
             </md-table-row>
         </md-table>
         <md-progress-bar
@@ -53,6 +84,15 @@
             md-description="Por favor, tente mais tarde."
         >
         </md-empty-state>
+        <md-dialog-confirm
+            :md-active.sync="confirmRemove.active"
+            md-title="Tem certeza que deseja remover este professor?"
+            md-content="Se o professor for removido, todos os alunos relacionado a ele serão também removidos!"
+            md-confirm-text="Sim"
+            md-cancel-text="Não"
+            @md-cancel="onCancel"
+            @md-confirm="onConfirm"
+        />
     </div>
 </template>
 
@@ -68,7 +108,8 @@ export default {
             professores: [],
             alunos: [],
             load: true,
-            fail: false
+            fail: false,
+            confirmRemove: { active: false, id: null }
         };
     },
     created() {
@@ -91,6 +132,15 @@ export default {
                 let indice = this.professores.indexOf(professor);
                 this.professores.splice(indice, 1);
             });
+        },
+        showDialogRemove(id) {
+            this.confirmRemove = { active: true, id };
+        },
+        onConfirm() {
+            this.remover(this.confirmRemove.id);
+        },
+        onCancel() {
+            this.value = "Disagreed";
         },
         addProfessor() {
             let _professor = {
