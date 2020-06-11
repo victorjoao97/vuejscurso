@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
     next();
 });
 
-Vue.http.options.root = "http://localhost:5000/";
+Vue.http.options.root = "https://vuejscurso-api.herokuapp.com/";
 
 new Vue({
     router,
